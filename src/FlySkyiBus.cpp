@@ -1,25 +1,55 @@
-#ifndef "FlySkyiBus.h"
-#define "FlySkyiBus.h"
+#ifndef FlySkyiBus
+#include "FlySkyiBus.h"
 #endif
 
-#ifndef "Arduino.h"
-#define  "Arduino.h"
-#endif
+Frame *FlySkyiBus::read_serial() {
 
-Frame* IBusSerial::read_serial() {
-    Frame *frame = new Frame;
-    if (iBus->available()>32) {
-        while(1){
-            if (ibus->read() == 0x20) {
+    if (available() >= 32) {
+        if (read() == 0x20) {
+            Frame *framePtr = new Frame;
+            uint8_t buffer[32];
+            buffer[0] = 0x20;
 
-                frame->buffer[0] = 0x20;
+            uint8_t i;
+            for (i=1; i<32; i++) {
+                buffer[i] = read();
+            }
 
-                for (uint8_t i=1; i<32; i++) {
-                    frame->buffer[i] = ibus->read();
-                }
-
-                return frame;
-            } else continue;
+            if (FlySkyiBus::frame_validation(framePtr, buffer) == true) {
+                FlySkyiBus::set_data(framePtr, buffer);
+                return framePtr;
+            }
         }
-    } else delayMicroseconds(7.7);
+        return read_serial();
+
+    } else {
+        delayMicroseconds(7);
+        return read_serial();
+    }
+
+}
+
+boolean FlySkyiBus::frame_validation(Frame *framePtr, uint8_t *buffer) {
+
+    uint8_t i;
+
+    for (i=0; i<30; i++) {
+        framePtr->checksum -= buffer[i];
+    }
+    framePtr->rxChecksum = buffer[30] + (buffer[31] << 8);
+
+    if (framePtr->rxChecksum == framePtr->checksum) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void FlySkyiBus::set_data(Frame *framePtr, uint8_t *buffer) {
+
+    uint8_t i;
+
+    for (i=1; i<15; i++) {
+        framePtr->data[i-1] = buffer[i * 2] + (buffer[i * 2 + 1] << 8);
+    }
 }

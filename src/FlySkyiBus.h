@@ -1,35 +1,27 @@
-#ifndef "Arduino.h"
-#define  "Arduino.h"
+#ifndef Arduino
+#include  "Arduino.h"
 #endif
 
-#ifndef "SoftwareSerial.h"
-#define "SoftwareSerial.h"
+#ifndef SoftwareSerial
+#include "SoftwareSerial.h"
 #endif
-
-boolean hit = false;
-uint8_t i;
-
-// Read serial to ibusBuffer
-// Control checksum
-// Calculate data
-// Print data
 
 struct Frame {
-    uint8_t buffer[32];
-    uint16_t data[16];
+    //uint8_t buffer[32];
+    uint16_t data[14];
     uint16_t checksum = 0xFFFF;
     uint16_t rxChecksum = 0x0000;
+    ~Frame() {
+        delete data;
+    }
 };
 
-void print_data();
-void calculate_data();
-boolean control_checksum();
-
-class IBusSerial: public: SoftwareSerial {
+class FlySkyiBus: public SoftwareSerial {
 private:
+    boolean frame_validation(Frame*, uint8_t*);
+    void set_data(Frame*, uint8_t*);
 public:
-    IBusSerial (uint8_t rx, uint8_t tx): SoftwareSerial(rx, tx) {};
-    SoftwareSerial ibusSerial();
+    FlySkyiBus (uint8_t rx, uint8_t tx): SoftwareSerial(rx, tx) {};
     void start();
-    Frame read_serial();
+    Frame *read_serial();
 };
