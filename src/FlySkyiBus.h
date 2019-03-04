@@ -6,8 +6,10 @@
 #include "SoftwareSerial.h"
 #endif
 
+#define CHANNEL_SIZE 10
+
 struct Frame {
-    uint16_t data[10];
+    uint16_t data[CHANNEL_SIZE];
     ~Frame() {
         delete data;
     }
