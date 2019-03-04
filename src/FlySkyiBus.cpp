@@ -1,3 +1,19 @@
+/*
+	FlySkyiBus Decoder Library
+
+    iBus protocol total supports 14 channels.
+    If you need more channels edit the CHANNEL_SIZE macro where defined in
+    FlySkyiBus.h file.
+
+    Source code: https://github.com/utkudarilmaz/FlySkyiBus/
+
+    License file added in the root directory.
+    
+    Edited 04-04-2019
+    Written by Seyit Utku Darılmaz <utkudarilmaz@gmail.com>
+
+*/
+
 #ifndef FlySkyiBus
 #include "FlySkyiBus.h"
 #endif
@@ -51,7 +67,7 @@ void FlySkyiBus::set_data(Frame *framePtr, uint8_t *buffer) {
 
     uint8_t i;
 
-    for (i=1; i<11; i++) {
+    for (i=1; i<CHANNEL_SIZE+1; i++) {
         framePtr->data[i-1] = buffer[i * 2] + (buffer[i * 2 + 1] << 8);
     }
 }
