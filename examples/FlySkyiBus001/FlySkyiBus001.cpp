@@ -4,22 +4,22 @@
 
 #include "FlySkyiBus.h"
 
-FlySkyiBus ibusSerial(2, 2); // RX, TX
+FlySkyiBus iBus(2, 2); // RX, TX
 
 void setup() {
     Serial.begin(115200);
     Serial.println("Welcome!");
-    ibusSerial.begin(115200);
+    iBus.begin(115200);
 }
 
 uint8_t i=0;
 
 void loop() {
 
-    Frame *framePtr = ibusSerial.read_serial();
+    Frame *framePtr = iBus.read_serial();
 
-    for(i=0; i<14; i++){
-        Serial.print(framePtr->data[i], DEC);
+    for(i=0; i<10; i++){
+        Serial.print(iBus.get_channel(framePtr, i), DEC);
         Serial.print("\t");
     }
     Serial.print("\n");
