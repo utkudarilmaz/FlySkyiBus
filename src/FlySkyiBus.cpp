@@ -55,3 +55,7 @@ void FlySkyiBus::set_data(Frame *framePtr, uint8_t *buffer) {
         framePtr->data[i-1] = buffer[i * 2] + (buffer[i * 2 + 1] << 8);
     }
 }
+
+uint16_t FlySkyiBus::get_channel(Frame *framePtr, uint8_t channel) {
+    return framePtr->data[channel];
+}

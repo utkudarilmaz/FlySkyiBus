@@ -19,6 +19,6 @@ private:
     void set_data(Frame*, uint8_t*);
 public:
     FlySkyiBus (uint8_t rx, uint8_t tx): SoftwareSerial(rx, tx) {};
-    void start();
     Frame *read_serial();
+    uint16_t get_channel(Frame*, uint8_t);
 };
