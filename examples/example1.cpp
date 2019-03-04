@@ -1,5 +1,6 @@
-/* %93 success rate from transmistted data frame.
-    This rate testing on 7251 data frame. */
+/* ~%93-95 success rate from transmistted data frame.
+    This rate testing on 2111 data frame.
+    In total data frame, 2000 valid frame, 111 invalid frame measured. */
 
 #include "FlySkyiBus.h"
 
