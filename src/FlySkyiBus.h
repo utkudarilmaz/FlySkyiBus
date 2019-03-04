@@ -7,10 +7,7 @@
 #endif
 
 struct Frame {
-    //uint8_t buffer[32];
-    uint16_t data[14];
-    uint16_t checksum = 0xFFFF;
-    uint16_t rxChecksum = 0x0000;
+    uint16_t data[10];
     ~Frame() {
         delete data;
     }

@@ -32,13 +32,15 @@ Frame *FlySkyiBus::read_serial() {
 boolean FlySkyiBus::frame_validation(Frame *framePtr, uint8_t *buffer) {
 
     uint8_t i;
+    uint16_t checksum = 0xFFFF;
+    uint16_t rxChecksum = 0x0000;
 
     for (i=0; i<30; i++) {
-        framePtr->checksum -= buffer[i];
+        checksum -= buffer[i];
     }
-    framePtr->rxChecksum = buffer[30] + (buffer[31] << 8);
+    rxChecksum = buffer[30] + (buffer[31] << 8);
 
-    if (framePtr->rxChecksum == framePtr->checksum) {
+    if (rxChecksum == checksum) {
         return true;
     } else {
         return false;
@@ -49,7 +51,7 @@ void FlySkyiBus::set_data(Frame *framePtr, uint8_t *buffer) {
 
     uint8_t i;
 
-    for (i=1; i<15; i++) {
+    for (i=1; i<11; i++) {
         framePtr->data[i-1] = buffer[i * 2] + (buffer[i * 2 + 1] << 8);
     }
 }
