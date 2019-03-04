@@ -1,6 +1,7 @@
 # FlySky iBus Decoder Library
 
-This library decoding FlySky i6 (not tested) or i6x (tested) tranmistted data.
+This library decoding transmitted data from FlySky i6 (not tested) or FlySky 
+i6x (tested).
 The used reciever when testing library is FlySky FS-A8S.
 
 Default library supported 10 channels.
