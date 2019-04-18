@@ -19,7 +19,7 @@ void loop() {
     Frame *framePtr = iBus.read_serial();
 
     for(i=0; i<10; i++){
-        Serial.print(iBus.get_channel(framePtr, i), DEC);
+        Serial.print(FlySkyiBus::get_channel(framePtr, i), DEC);
         Serial.print("\t");
     }
     Serial.print("\n");

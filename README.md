@@ -26,11 +26,11 @@ Then import the library to source code.
 		Frame *framePtr = iBus.read_serial();
 
 		// You can get channel data using:
-		Serial.println(iBus.get_channel(framePtr, <channel>);
+		Serial.println(FlySkyiBus::get_channel(framePtr, <channel>);
 
 		// Or you can get data from using pointer.
 		Serial.println(framePtr->data[<channel>]);
-		
+
 		delete framePtr;
 	}
 
