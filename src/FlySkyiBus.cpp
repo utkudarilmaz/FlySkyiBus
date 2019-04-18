@@ -8,7 +8,7 @@
     Source code: https://github.com/utkudarilmaz/FlySkyiBus/
 
     License file added in the root directory.
-    
+
     Edited 04-04-2019
     Written by Seyit Utku Darılmaz <utkudarilmaz@gmail.com>
 
@@ -21,7 +21,7 @@
 Frame *FlySkyiBus::read_serial() {
 
     if (available() >= 32) {
-        if (read() == 0x20) {
+        if (read() == 0x20) { // Start bit of frame
             Frame *framePtr = new Frame;
             uint8_t buffer[32];
             buffer[0] = 0x20;
@@ -31,7 +31,7 @@ Frame *FlySkyiBus::read_serial() {
                 buffer[i] = read();
             }
 
-            if (FlySkyiBus::frame_validation(framePtr, buffer) == true) {
+            if (FlySkyiBus::frame_validation(buffer) == true) {
                 FlySkyiBus::set_data(framePtr, buffer);
                 return framePtr;
             }
@@ -45,7 +45,7 @@ Frame *FlySkyiBus::read_serial() {
 
 }
 
-boolean FlySkyiBus::frame_validation(Frame *framePtr, uint8_t *buffer) {
+boolean FlySkyiBus::frame_validation(uint8_t *buffer) {
 
     uint8_t i;
     uint16_t checksum = 0xFFFF;

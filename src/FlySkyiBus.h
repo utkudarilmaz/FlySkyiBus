@@ -33,7 +33,7 @@ struct Frame {
 
 class FlySkyiBus: public SoftwareSerial {
 private:
-    boolean frame_validation(Frame*, uint8_t*);
+    boolean frame_validation(uint8_t*);
     void set_data(Frame*, uint8_t*);
 public:
     FlySkyiBus (uint8_t rx, uint8_t tx): SoftwareSerial(rx, tx) {};
