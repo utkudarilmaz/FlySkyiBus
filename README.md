@@ -14,26 +14,26 @@ mv FlySkyiBus <arduino-ide-path>/libraries/
 
 Then import the library to source code.
 ```c
-	#include "FlySkyiBus.h"
+#include "FlySkyiBus.h"
 
-	FlySkyiBus iBus(<rx>, <tx>);
+FlySkyiBus iBus(<rx>, <tx>);
 
-	void setup() {
-		Serial.begin(115200);
-		iBus.begin(115200);
-	}
+void setup() {
+	Serial.begin(115200);
+	iBus.begin(115200);
+}
 
-	void loop() {
-		Frame *framePtr = iBus.read_serial();
+void loop() {
+	Frame *framePtr = iBus.read_serial();
 
-		// You can get channel data using:
-		Serial.println(FlySkyiBus::get_channel(framePtr, <channel>);
+	// You can get channel data using:
+	Serial.println(FlySkyiBus::get_channel(framePtr, <channel>);
 
-		// Or you can get data from using pointer.
-		Serial.println(framePtr->data[<channel>]);
+	// Or you can get data from using pointer.
+	Serial.println(framePtr->data[<channel>]);
 
-		delete framePtr;
-	}
+	delete framePtr;
+}
 ```
 
 ## Hacking Library
