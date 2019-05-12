@@ -7,12 +7,13 @@ The used reciever when testing library is FlySky FS-A8S.
 Default library supported 10 channels.
 
 ## Usage
-
-	git clone https://github.com/utkudarilmaz/FlySkyiBus
-	mv FlySkyiBus <arduino-ide>/libraries/
+```console
+git clone https://github.com/utkudarilmaz/FlySkyiBus
+mv FlySkyiBus <arduino-ide-path>/libraries/
+```
 
 Then import the library to source code.
-
+```c
 	#include "FlySkyiBus.h"
 
 	FlySkyiBus iBus(<rx>, <tx>);
@@ -33,6 +34,7 @@ Then import the library to source code.
 
 		delete framePtr;
 	}
+```
 
 ## Hacking Library
 
