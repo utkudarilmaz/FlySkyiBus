@@ -14,7 +14,7 @@ mv FlySkyiBus <arduino-ide>/libraries/
 ```
 
 Then import the library to source code.
-```c++
+```c
 #include "FlySkyiBus.h"
 
 FlySkyiBus iBus(2,2); //rx and tx pins
@@ -26,7 +26,6 @@ void setup() {
 
 void loop() {
 	iBus.read_serial();
-
 	Serial.println(iBus::get_channel(2); // Channel number [1-10]
 }
 ```
