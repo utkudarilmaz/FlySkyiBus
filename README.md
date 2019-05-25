@@ -8,31 +8,28 @@ Default library supported 10 channels.
 
 ## Usage
 
-	git clone https://github.com/utkudarilmaz/FlySkyiBus
-	mv FlySkyiBus <arduino-ide>/libraries/
+```console
+git clone https://github.com/utkudarilmaz/FlySkyiBus
+mv FlySkyiBus <arduino-ide>/libraries/
+```
 
 Then import the library to source code.
+```c++
+#include "FlySkyiBus.h"
 
-	#include "FlySkyiBus.h"
+FlySkyiBus iBus(2,2); //rx and tx pins
 
-	FlySkyiBus iBus(<rx>, <tx>);
+void setup() {
+	Serial.begin(115200);
+	iBus.begin(115200);
+}
 
-	void setup() {
-		Serial.begin(115200);
-		iBus.begin(115200);
-	}
+void loop() {
+	iBus.read_serial();
 
-	void loop() {
-		Frame *framePtr = iBus.read_serial();
-
-		// You can get channel data using:
-		Serial.println(FlySkyiBus::get_channel(framePtr, <channel>);
-
-		// Or you can get data from using pointer.
-		Serial.println(framePtr->data[<channel>]);
-
-		delete framePtr;
-	}
+	Serial.println(iBus::get_channel(2); // Channel number [1-10]
+}
+```
 
 ## Hacking Library
 

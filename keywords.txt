@@ -1,4 +1,3 @@
 FlySkyiBus	KEYWORD1
-Frame		KEYWORD3
 read_serial	KEYWORD2
 get_channel	KEYWORD2
