@@ -18,11 +18,16 @@
 #include "FlySkyiBus.h"
 #endif
 
-Frame *FlySkyiBus::read_serial() {
+
+FlySkyiBus::~FlySkyiBus(void) {
+    Serial.println("iBus object deleting.");
+    delete data;
+};
+
+void FlySkyiBus::read_serial(void) {
 
     if (available() >= 32) {
         if (read() == 0x20) { // Start bit of frame
-            Frame *framePtr = new Frame;
             uint8_t buffer[32];
             buffer[0] = 0x20;
 
@@ -32,8 +37,8 @@ Frame *FlySkyiBus::read_serial() {
             }
 
             if (FlySkyiBus::frame_validation(buffer) == true) {
-                FlySkyiBus::set_data(framePtr, buffer);
-                return framePtr;
+                FlySkyiBus::set_data(buffer);
+                return;
             }
         }
         return read_serial();
@@ -42,10 +47,9 @@ Frame *FlySkyiBus::read_serial() {
         delayMicroseconds(7);
         return read_serial();
     }
-
 }
 
-boolean FlySkyiBus::frame_validation(uint8_t *buffer) {
+bool FlySkyiBus::frame_validation(uint8_t *buffer) {
 
     uint8_t i;
     uint16_t checksum = 0xFFFF;
@@ -54,6 +58,7 @@ boolean FlySkyiBus::frame_validation(uint8_t *buffer) {
     for (i=0; i<30; i++) {
         checksum -= buffer[i];
     }
+
     rxChecksum = buffer[30] + (buffer[31] << 8);
 
     if (rxChecksum == checksum) {
@@ -63,15 +68,15 @@ boolean FlySkyiBus::frame_validation(uint8_t *buffer) {
     }
 }
 
-void FlySkyiBus::set_data(Frame *framePtr, uint8_t *buffer) {
+void FlySkyiBus::set_data(uint8_t *buffer) {
 
     uint8_t i;
 
     for (i=1; i<CHANNEL_SIZE+1; i++) {
-        framePtr->data[i-1] = buffer[i * 2] + (buffer[i * 2 + 1] << 8);
+        data[i-1] = buffer[i * 2] + (buffer[i * 2 + 1] << 8);
     }
 }
 
-uint16_t FlySkyiBus::get_channel(Frame *framePtr, uint8_t channel) {
-    return framePtr->data[channel];
+uint16_t FlySkyiBus::get_channel(uint8_t channel) {
+    return data[channel];
 }

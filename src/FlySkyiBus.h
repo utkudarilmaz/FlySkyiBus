@@ -24,19 +24,20 @@
 
 #define CHANNEL_SIZE 10
 
-struct Frame {
-    uint16_t data[CHANNEL_SIZE];
-    ~Frame() {
-        delete data;
-    }
-};
-
 class FlySkyiBus: public SoftwareSerial {
+
 private:
-    boolean frame_validation(uint8_t*);
-    void set_data(Frame*, uint8_t*);
+
+    uint16_t data[CHANNEL_SIZE];
+    
+    void set_data(uint8_t*);
+    bool frame_validation(uint8_t*);
+
 public:
-    FlySkyiBus (uint8_t rx, uint8_t tx): SoftwareSerial(rx, tx) {};
-    Frame *read_serial();
-    static uint16_t get_channel(Frame*, uint8_t);
+
+    FlySkyiBus(uint8_t rx, uint8_t tx): SoftwareSerial(rx, tx) {};
+    ~FlySkyiBus(void);
+
+    uint16_t get_channel(uint8_t);
+    void read_serial(void);
 };
