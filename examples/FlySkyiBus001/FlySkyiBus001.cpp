@@ -16,14 +16,12 @@ uint8_t i=0;
 
 void loop() {
 
-    Frame *framePtr = iBus.read_serial();
+    iBus.read_serial();
 
     for(i=0; i<10; i++){
-        Serial.print(FlySkyiBus::get_channel(framePtr, i), DEC);
+        Serial.print(iBus.get_channel(i), DEC);
         Serial.print("\t");
     }
+
     Serial.print("\n");
-
-    delete framePtr;
-
 }
