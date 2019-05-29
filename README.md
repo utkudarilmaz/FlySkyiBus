@@ -26,7 +26,7 @@ void setup() {
 
 void loop() {
 	iBus.read_serial();
-	Serial.println(iBus::get_channel(2); // Channel number [1-10]
+	Serial.println(iBus::get_channel(2)); // Channel number [0-9]
 }
 ```
 
